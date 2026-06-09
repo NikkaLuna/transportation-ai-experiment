@@ -1,0 +1,1 @@
+International shipments where origin country differs from destination country require customs documentation review.

@@ -1,0 +1,7 @@
+Shipment weight must be greater than 0.
+Origin and destination must not be the same.
+If shipment confidence is below 0.75, flag for manual review.
+International shipments where origin country differs from destination country require customs documentation review.
+Reefer shipments must include temperature requirements.
+CMA CGM shipments over 20000 lbs require logistics review.
+Delivery date is required for final shipment approval.

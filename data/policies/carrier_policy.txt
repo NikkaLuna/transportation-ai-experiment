@@ -1,0 +1,3 @@
+CMA CGM shipments over 20000 lbs require logistics review.
+Maersk reefer shipments require temperature documentation.
+Hapag-Lloyd dangerous goods shipments require hazmat approval.
