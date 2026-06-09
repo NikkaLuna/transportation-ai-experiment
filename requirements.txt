@@ -5,4 +5,4 @@ langchain-community
 pydantic
 python-dotenv
 tenacity
-faiss-cpu
+faiss-cpuD

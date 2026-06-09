@@ -28,7 +28,7 @@ def load_pdf(pdf_path: str) -> List[Document]:
         for doc in docs:
             doc.page_content = clean_text(doc.page_content)
         
-        print(f"✅ Loaded and cleaned PDF: {pdf_path} ({len(docs)} pages)")
+        print(f" Loaded and cleaned PDF: {pdf_path} ({len(docs)} pages)")
         return docs
         
     except Exception as e:
