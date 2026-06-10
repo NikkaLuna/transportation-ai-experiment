@@ -1,0 +1,25 @@
+[
+  {
+    "created_at": "2026-06-10T19:43:39.698978",
+    "shipment_id": "CEXP190150",
+    "carrier": "CMA CGM",
+    "origin": "CHENNAI (EX MADRAS), INDIA",
+    "destination": "JEBEL ALI, UNITED ARAB EMIRATES",
+    "review_required": true,
+    "review_reasons": [
+      "Delivery date is required for final shipment approval.",
+      "Delivery date is missing."
+    ]
+  },
+  {
+    "created_at": "2026-06-10T19:52:18.224473",
+    "shipment_id": "CEXP190150",
+    "carrier": "CMA CGM",
+    "origin": "CHENNAI (EX MADRAS), INDIA",
+    "destination": "JEBEL ALI, UNITED ARAB EMIRATES",
+    "review_required": true,
+    "review_reasons": [
+      "Delivery date is required for final shipment approval."
+    ]
+  }
+]

@@ -14,6 +14,7 @@ from loaders.policy_loader import load_policy_documents
 from utils.error_handler import safe_invoke, safe_structured_invoke
 from validators.business_rules import validate_business_rules
 from evaluators.extraction_evaluator import evaluate_extraction
+from review.human_review_queue import add_to_review_queue
 
 load_dotenv()
 
@@ -106,6 +107,18 @@ def main():
     print(f"Total RAG validation completed in {time.time() - rag_start:.2f} seconds")
     print("\nPolicy Validation Result:")
     print(validation_result.model_dump_json(indent=2))
+
+    print("\nChecking human review routing...")
+
+    review_result = add_to_review_queue(
+        result,
+        validation_result,
+        business_rule_result
+    )
+
+    print("\nHuman Review Result:")
+    print(review_result)
+
 
     print("\nRunning extraction evaluation...")
 
