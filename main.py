@@ -13,6 +13,7 @@ from loaders.document_loader import load_pdf
 from loaders.policy_loader import load_policy_documents
 from utils.error_handler import safe_invoke
 from validators.business_rules import validate_business_rules
+from evaluators.extraction_evaluator import evaluate_extraction
 
 load_dotenv()
 
@@ -98,6 +99,21 @@ def main():
     print(f"Business rule warnings found: {len(business_rule_result['business_rule_warnings'])}")
     print("\nBusiness Rule Validation Result:")
     print(business_rule_result)
+
+    print("\nRunning extraction evaluation...")
+
+    expected_values = {
+        "carrier": "CMA CGM",
+        "weight": 18000.0,
+        "origin_contains": "INDIA",
+        "destination_contains": "UNITED ARAB EMIRATES",
+        "pickup_date": "2019-01-16"
+    }
+
+    evaluation_result = evaluate_extraction(result, expected_values)
+
+    print("\nExtraction Evaluation Result:")
+    print(evaluation_result)
     
     print(f"\nTotal pipeline runtime: {time.time() - total_start:.2f} seconds")
 
