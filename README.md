@@ -77,12 +77,66 @@ Example output:
 
 * * * * *
 
+### Deterministic Business Rule Validation
+
+In addition to LLM-based policy validation, the pipeline performs deterministic Python-based validation for:
+
+- Weight > 0
+- Origin ≠ Destination
+- Delivery date checks
+- Date sequence validation
+- Confidence threshold review rules
+
+* * * * *
+
+### Human Review Queue
+
+Shipments that fail validation checks or require additional review are automatically routed to a human review queue.
+
+Examples:
+
+- Missing delivery dates
+- Low extraction confidence
+- Compliance warnings
+
+* * * * *
+
+### Reliability & Error Handling
+
+The pipeline includes production-style safeguards:
+
+- Automatic retries for transient API failures
+- Structured output validation retries
+- Graceful fallback responses
+- Diagnostic logging
+
+* * * * *
+
 Architecture
 ------------
 
-```
-Bill of Lading PDF        │        ▼PDF Loader        │        ▼OpenAI + LangChain Extraction Chain        │        ▼Structured Shipment JSON        │        ▼Policy Retriever (RAG)        │        ▼Vector Search        │        ▼Relevant Policy Context        │        ▼Policy Validation Chain        │        ▼Compliance Warnings & Recommendations
-```
+Bill of Lading PDF
+        ↓
+PDF Loader
+        ↓
+OpenAI + LangChain Extraction Chain
+        ↓
+Structured Shipment JSON
+        ↓
+Business Rule Validation
+        ↓
+Policy Retriever / RAG
+        ↓
+Vector Search
+        ↓
+Relevant Policy Context
+        ↓
+Policy Validation Chain
+        ↓
+Human Review Queue
+        ↓
+Evaluation + Observability
+
 
 * * * * *
 
@@ -137,22 +191,6 @@ Bill of Lading PDF
 ```
 {  "policy_matches": [    "Shipment weight must be greater than 0.",    "International shipments require customs documentation review."  ],  "compliance_warnings": [    "Delivery date is required for final shipment approval."  ],  "recommended_actions": [    "Request delivery date before shipment approval."  ]}
 ```
-
-* * * * *
-
-Future Enhancements
--------------------
-
-Planned improvements:
-
--   Agentic workflows using LangChain Agents
--   Tool calling for business rule validation
--   Evaluation framework for extraction accuracy
--   Tracing and observability
--   Azure OpenAI integration
--   Cost and token monitoring
--   Multi-document shipment processing
--   Human-in-the-loop review workflow
 
 * * * * *
 
