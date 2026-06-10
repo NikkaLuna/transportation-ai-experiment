@@ -11,7 +11,7 @@ from chains.policy_retriever import build_policy_retriever
 from chains.policy_validation_chain import policy_validation_chain
 from loaders.document_loader import load_pdf
 from loaders.policy_loader import load_policy_documents
-from utils.error_handler import safe_invoke
+from utils.error_handler import safe_invoke, safe_structured_invoke
 from validators.business_rules import validate_business_rules
 from evaluators.extraction_evaluator import evaluate_extraction
 
@@ -54,13 +54,29 @@ def main():
     print(f"Successfully loaded PDF ({len(extracted_text)} characters)")
     print(f"PDF load completed in {time.time() - load_start:.2f} seconds\n")
     
-    # Extraction
+    # === EXTRACTION WITH RETRIES + FALLBACK ===
     extraction_start = time.time()
-    print("Running extraction...")
-    result = safe_invoke(basic_extraction_chain, {"message": extracted_text})
+    print("Running extraction with retries + structured validation...")
+    
+    # Use the robust handler instead of safe_invoke
+    result = safe_structured_invoke(
+        basic_extraction_chain, 
+        {"message": extracted_text},
+        max_retries=2
+    )
+    
     print(f"Extraction completed in {time.time() - extraction_start:.2f} seconds")
     print("\nExtracted Structured Data from PDF:")
     print(result.model_dump_json(indent=2))
+
+    # Business Rules Validation
+    business_start = time.time()
+    print("\nRunning deterministic business rule validation...")
+    business_rule_result = validate_business_rules(result)
+    print(f"Business rule validation completed in {time.time() - business_start:.2f} seconds")
+    print(f"Business rule warnings found: {len(business_rule_result['business_rule_warnings'])}")
+    print("\nBusiness Rule Validation Result:")
+    print(business_rule_result)
     
     # RAG Policy Validation
     rag_start = time.time()
@@ -90,15 +106,6 @@ def main():
     print(f"Total RAG validation completed in {time.time() - rag_start:.2f} seconds")
     print("\nPolicy Validation Result:")
     print(validation_result.model_dump_json(indent=2))
-    
-    # Business Rules Validation
-    business_start = time.time()
-    print("\nRunning deterministic business rule validation...")
-    business_rule_result = validate_business_rules(result)
-    print(f"Business rule validation completed in {time.time() - business_start:.2f} seconds")
-    print(f"Business rule warnings found: {len(business_rule_result['business_rule_warnings'])}")
-    print("\nBusiness Rule Validation Result:")
-    print(business_rule_result)
 
     print("\nRunning extraction evaluation...")
 
