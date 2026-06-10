@@ -115,28 +115,39 @@ The pipeline includes production-style safeguards:
 Architecture
 ------------
 
+```text
 Bill of Lading PDF
-        ↓
+        |
+        v
 PDF Loader
-        ↓
+        |
+        v
 OpenAI + LangChain Extraction Chain
-        ↓
+        |
+        v
 Structured Shipment JSON
-        ↓
+        |
+        v
 Business Rule Validation
-        ↓
+        |
+        v
 Policy Retriever / RAG
-        ↓
+        |
+        v
 Vector Search
-        ↓
+        |
+        v
 Relevant Policy Context
-        ↓
+        |
+        v
 Policy Validation Chain
-        ↓
+        |
+        v
 Human Review Queue
-        ↓
+        |
+        v
 Evaluation + Observability
-
+```
 
 * * * * *
 
@@ -167,8 +178,45 @@ Technologies Used
 Project Structure
 -----------------
 
-```
-transportation-ai-experiment/├── chains/│   ├── extraction_chain.py│   ├── policy_retriever.py│   └── policy_validation_chain.py│├── data/│   ├── sample_bill_of_lading.pdf│   └── policies/│├── loaders/│   ├── document_loader.py│   └── policy_loader.py│├── prompts/│   ├── shipment_extraction.py│   └── policy_validation.py│├── schemas/│   ├── shipment.py│   └── policy_validation.py│├── config.py├── main.py└── requirements.txt
+```text
+transportation-ai-experiment/
+├── chains/
+│   ├── extraction_chain.py
+│   ├── policy_retriever.py
+│   └── policy_validation_chain.py
+│
+├── data/
+│   ├── sample_bill_of_lading.pdf
+│   └── policies/
+│
+├── evaluators/
+│   └── extraction_evaluator.py
+│
+├── loaders/
+│   ├── document_loader.py
+│   └── policy_loader.py
+│
+├── prompts/
+│   ├── shipment_extraction.py
+│   └── policy_validation.py
+│
+├── review/
+│   └── human_review_queue.py
+│
+├── schemas/
+│   ├── shipment.py
+│   └── policy_validation.py
+│
+├── utils/
+│   └── error_handler.py
+│
+├── validators/
+│   └── business_rules.py
+│
+├── config.py
+├── main.py
+├── requirements.txt
+└── README.md
 ```
 
 * * * * *
