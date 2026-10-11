@@ -10,6 +10,8 @@ The system extracts structured shipment data from Bills of Lading (PDFs), retrie
 
 The goal is to simulate how modern logistics organizations can combine traditional document processing with LLM-powered reasoning and policy enforcement.
 
+![AI-Powered Transportation Document Processing Pipeline](AI-Powered%20Transportation%20Document%20Pipeline.png)
+
 * * * * *
 
 Features
